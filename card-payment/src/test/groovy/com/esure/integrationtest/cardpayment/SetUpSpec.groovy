@@ -2,7 +2,6 @@ package com.esure.integrationtest.cardpayment
 
 import com.esure.integrationtest.ScenarioState
 import com.esure.integrationtest.cardpayment.client.CardPaymentClient
-import com.esure.integrationtest.cardpayment.payload.SetupRequestDefaults
 import com.esure.integrationtest.config.TestConfig
 import org.apache.http.HttpHeaders
 import org.apache.http.entity.ContentType
@@ -10,13 +9,14 @@ import spock.lang.Shared
 import spock.lang.Specification
 
 import static com.esure.integrationtest.cardpayment.payload.SetupRequestDefaults.defaultChannelSource
-import static com.esure.integrationtest.cardpayment.payload.SetupRequestDefaults.defaultSetupRequest
+import static com.esure.integrationtest.cardpayment.payload.SetupRequestDefaults.defaultPaymentSetupRequest
 import static com.esure.integrationtest.cardpayment.payload.SetupRequestDefaults.defaultSetupRequest
 import static com.esure.integrationtest.request.HttpMethod.POST
+import static java.util.Collections.emptyList
+import static org.apache.http.HttpStatus.SC_BAD_REQUEST
 
 class SetUpSpec extends Specification {
     ScenarioState scenarioState
-
     @Shared def client = new CardPaymentClient()
 
     def setup() {
@@ -28,58 +28,49 @@ class SetUpSpec extends Specification {
             .addHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString())
     }
 
-    def "Set up success message should return for EM and I"() {
-        given:
-        scenarioState.request().with(defaultSetupRequest().build())
-
-        when: 'RequestState is sent to the service with product code EM and I'
-        scenarioState.sendRequest()
-        def response = scenarioState.response()
-
-        then: 'should get the success response from the service'
-        with(response) {
-            assert response.statusCode() == 200
-        }
-    }
-
-    def "Set up success message should return for FC and I"() {
-        given:
+    def "Setup is success with different product code EM and FC"(String productCode) {
+        given: 'a request with product code $productCode'
         scenarioState.request().with(
             defaultSetupRequest().channelSource(
-                defaultChannelSource().productCode('FC').build()).build())
+                defaultChannelSource().productCode(productCode).build())
+                .build())
 
-        when: 'RequestState is sent to the service with product code EM and I'
+        when: 'setup request is sent'
         scenarioState.sendRequest()
         def response = scenarioState.response()
 
-
-        then: 'should get the success response from the service'
+        then: 'it returns 200 response code'
         with(response) {
-            assert response.status == 200
-            assert response.getData().infos[0].message == 'Falcon card payment setup method called successfully'
-            assert response.getData().results[0].reason == 'ACCEPTED'
+            response.printResponseBodyForDebugging()
+            assert response.statusCode() == 200
+            assert response.firstValueAtPath('infos.message') == 'Falcon card payment setup method called successfully'
+            assert response.firstValueAtPath('results.reason') == 'ACCEPTED'
+        }
+
+        where:
+        productCode | _
+        'EM'        | _
+        'FC'        | _
+    }
+
+    def "Set up validation fails when request has missing fields"() {
+        given: 'a request with no dynamic data field'
+        scenarioState.request()
+            .with(defaultSetupRequest()
+                .paymentSetupRequest(defaultPaymentSetupRequest()
+                    .dynamicData(emptyList()).build()).build())
+
+        when: 'setup request is sent'
+        scenarioState.sendRequest()
+        def response = scenarioState.response()
+
+        then: 'it returns 400 response'
+        with(response) {
+            assert response.statusCode() == SC_BAD_REQUEST
+            assert response.firstValueAtPath('errors.code') == 'BAD_REQUEST'
+            assert response.firstValueAtPath('errors.message') == 'setup.body.paymentSetupRequest.dynamicData must contain atleast 1 entry'
         }
     }
-//
-//    def "Set up validation - Dynamic data is missing in the request"() {
-//        given:
-//        client.handler.failure = client.handler.success
-//        when: 'RequestState is sent to the service with missing dynamic data field'
-//        response = client.post(
-//                headers: headers,
-//                requestContentType: ContentType.JSON,
-//                body: SetupRequestDefaults.defaultSetupRequest()
-//                        .paymentSetupRequest(
-//                        SetupRequestDefaults.defaultPaymentSetupRequest()
-//                                .dynamicData(Collections.emptyList()).build()).build())
-//
-//        then: 'should get BAD_REQUEST in the response and an error message'
-//        with(this.response) {
-//            assert this.response.status == 400
-//            assert this.response.getData().errors[0].code == 'BAD_REQUEST'
-//            assert this.response.getData().errors[0].message == 'setup.body.paymentSetupRequest.dynamicData must contain atleast 1 entry'
-//        }
-//    }
 
 
 }

@@ -5,8 +5,7 @@ import com.esure.integrationtest.config.TestConfig
 
 
 class CardPaymentClient implements Client {
-
-    String baseUri
+    final String baseUri
 
     CardPaymentClient () {
         this.baseUri = TestConfig.getConfig()['url']
@@ -14,7 +13,6 @@ class CardPaymentClient implements Client {
 
     @Override
     String getBaseUri() {
-//        return "http://google.com"
-        return this.baseUri
+        return this.baseUri + '/api-jva-cardpayment/v1/payment'
     }
 }

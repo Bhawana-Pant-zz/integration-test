@@ -12,4 +12,12 @@ class ResponseState {
     int statusCode() {
         return response.getStatusCode()
     }
+
+    String firstValueAtPath(String path) {
+        return response.jsonPath().getList(path).get(0)
+    }
+
+    void printResponseBodyForDebugging() {
+        response.body().prettyPrint()
+    }
 }

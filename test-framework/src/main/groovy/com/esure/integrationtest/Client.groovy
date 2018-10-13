@@ -35,14 +35,13 @@ trait Client {
                         .headers(requestState.getHeaders())
                         .body(requestState.getPayload().asJsonString())
                         .when()
-                        .config(clientTimeoutConfig())
                         .post(requestState.getPath())
                         .thenReturn()
                 default:
                     throw new Exception("Not Implemented for method " + requestState.getHttpMethod().name())
             }
         } catch (SocketTimeoutException ex) {
-            println "*********Socket timeout connecting to host " + getBaseUri() _ "**************"
+            println "*********Socket timeout connecting to host " + getBaseUri() + "**************"
             throw ex
         }
     }

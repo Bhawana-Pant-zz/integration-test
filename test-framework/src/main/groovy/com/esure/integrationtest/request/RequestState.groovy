@@ -1,6 +1,6 @@
 package com.esure.integrationtest.request
 
-public class RequestState {
+class RequestState {
     HttpMethod httpMethod = HttpMethod.GET
     String path = ""
     Map<String, Object> headers = [:]

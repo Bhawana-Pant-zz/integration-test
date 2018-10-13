@@ -6,6 +6,6 @@ env {
     }
     test {
         url = "https://ops-kong-tste.escloud.co.uk"
-        apikey = "ow4mrsfrs1bz31j9zethbwue1srqc5fg"
+        apikey = "qpkr79rwksuawcw5bqvhekvj8l3pml43"
     }
 }
