@@ -19,7 +19,7 @@ class ConfigLoader {
             .get('env')[environment] as ConfigObject
     }
 
-    private boolean isNullOrEmpty() {
+    private static boolean isNullOrEmpty() {
         System.getProperty('env') == null || System.getProperty('env').trim().isEmpty()
     }
 }

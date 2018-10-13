@@ -1,6 +1,5 @@
 package com.esure.integrationtest
 
-import com.esure.integrationtest.request.HttpMethod
 import com.esure.integrationtest.request.RequestState
 import io.restassured.response.Response
 
