@@ -13,6 +13,10 @@ subprojects {
 
     sourceCompatibility = 1.8
 
+    test {
+        systemProperty "env", System.getProperty("env") // TODO work around
+    }
+
     dependencies {
         compile libs['groovyall']
         compile libs['restassured']

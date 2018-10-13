@@ -1,18 +1,16 @@
 package com.esure.integrationtest
 
-
 import com.esure.integrationtest.request.RequestState
 import io.restassured.RestAssured
 import io.restassured.config.HttpClientConfig
 import io.restassured.config.RestAssuredConfig
 import io.restassured.response.Response
-import org.apache.http.params.CoreConnectionPNames
 
 import static com.esure.integrationtest.request.HttpMethod.GET
 import static com.esure.integrationtest.request.HttpMethod.POST
-import static io.restassured.RestAssured.authentication
 import static io.restassured.RestAssured.given
-import static org.apache.http.params.CoreConnectionPNames.*
+import static org.apache.http.params.CoreConnectionPNames.CONNECTION_TIMEOUT
+import static org.apache.http.params.CoreConnectionPNames.SO_TIMEOUT
 
 trait Client {
 
@@ -41,7 +39,7 @@ trait Client {
                     throw new Exception("Not Implemented for method " + requestState.getHttpMethod().name())
             }
         } catch (SocketTimeoutException ex) {
-            println "*********Socket timeout connecting to host " + getBaseUri() + "**************"
+            println "********* Socket timeout connecting to host " + getBaseUri() + "**************"
             throw ex
         }
     }

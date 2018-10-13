@@ -12,7 +12,8 @@ class ConfigLoader {
     }
 
     private void loadConfig() {
-        def environment = PropertyPermission.hasProperty('env') ? env : 'test'
+        def environment = System.getProperty('env')  == null ? 'dev' : System.getProperty('env')
+        println "********************** Environment is set to $environment *************************"
         this.config = new ConfigSlurper()
             .parse(getClass().getResource('/config.groovy'))
             .get('env')[environment] as ConfigObject
