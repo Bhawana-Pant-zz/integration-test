@@ -1,0 +1,25 @@
+apply from: "gradle/dependencies.gradle"
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+
+    group 'com.esure.integrationtest'
+    version '1.0-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+
+    sourceCompatibility = 1.8
+
+    dependencies {
+        compile libs['groovyall']
+        compile libs['restassured']
+        compile libs['spockcore']
+        compile libs['junit']
+    }
+}
+
+
+

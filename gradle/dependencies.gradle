@@ -1,0 +1,16 @@
+ext {
+
+    versions = [
+            groovy     : '2.5.2',
+            restassured: '3.1.1',
+            spock      : '1.2-groovy-2.5',
+            junit      : '4.12'
+    ]
+
+    libs = [
+            groovyall  : "org.codehaus.groovy:groovy-all:$versions.groovy",
+            restassured: "io.rest-assured:rest-assured:$versions.restassured",
+            spockcore  : "org.spockframework:spock-core:$versions.spock",
+            junit      : "junit:junit:$versions.junit",
+    ]
+}
