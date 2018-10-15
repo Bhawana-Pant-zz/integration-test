@@ -7,7 +7,7 @@ import com.esure.integrationtest.cardpayment.payload.SetupRequestDefaults
 import spock.lang.Shared
 import spock.lang.Specification
 
-import static Scenarios.setupScenario
+import static Scenarios.setupScenarioState
 import static com.esure.integrationtest.cardpayment.payload.SetupRequestDefaults.requestWithProductCode
 import static org.apache.http.HttpStatus.SC_BAD_REQUEST
 import static org.apache.http.HttpStatus.SC_OK
@@ -17,7 +17,7 @@ class SetUpSpec extends Specification {
     @Shared def client = new CardPaymentClient()
 
     def setup() {
-       setupScenarioState = setupScenario(client)
+       setupScenarioState = setupScenarioState(client)
     }
 
     def "Setup is success with different product code EM and FC"(String productCode) {
