@@ -13,21 +13,21 @@ import static org.apache.http.HttpStatus.SC_BAD_REQUEST
 import static org.apache.http.HttpStatus.SC_OK
 
 class SetUpSpec extends Specification {
-    ScenarioState setupScenarioState
+    ScenarioState setupScenarioUnderTest
     @Shared def client = new CardPaymentClient()
 
     def setup() {
-       setupScenarioState = setupScenarioState(client)
+        setupScenarioUnderTest = setupScenarioState(client)
     }
 
     def "Setup is success with different product code EM and FC"(String productCode) {
-        given: 'a request with product code $productCode'
-        setupScenarioState.request().with(requestWithProductCode(productCode))
+        given: 'a requestState with product code $productCode'
+        setupScenarioUnderTest.requestState().with(requestWithProductCode(productCode))
 
-        when: 'setupScenarioState request is sent'
+        when: 'setupScenarioState requestState is sent'
         ResponseState response = executeSetupAndGetResponse()
 
-        then: 'it returns 200 response code'
+        then: 'it returns 200 responseState code'
         with(response) {
             response.printResponseBodyForDebugging()
             assert response.statusCode() == SC_OK
@@ -42,14 +42,14 @@ class SetUpSpec extends Specification {
     }
 
     def "Set up validation fails when request has missing fields"() {
-        given: 'a request with no dynamic data field'
-        setupScenarioState.request().with(SetupRequestDefaults.requestWithNoDynamicData())
+        given: 'a requestState with no dynamic data field'
+        setupScenarioUnderTest.requestState().with(SetupRequestDefaults.requestWithNoDynamicData())
 
-        when: 'setupScenarioState request is sent'
+        when: 'setupScenarioState requestState is sent'
         ResponseState response = executeSetupAndGetResponse()
 
 
-        then: 'it returns 400 response'
+        then: 'it returns 400 responseState'
         with(response) {
             assert response.statusCode() == SC_BAD_REQUEST
             assert response.firstValueAtPath('errors.code') == 'BAD_REQUEST'
@@ -58,8 +58,8 @@ class SetUpSpec extends Specification {
     }
 
     private ResponseState executeSetupAndGetResponse() {
-        setupScenarioState.sendRequest()
-        def response = setupScenarioState.response()
+        setupScenarioUnderTest.sendRequest()
+        def response = setupScenarioUnderTest.responseState()
         response
     }
 }

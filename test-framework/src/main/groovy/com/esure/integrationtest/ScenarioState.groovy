@@ -14,12 +14,12 @@ class ScenarioState {
         this.responseState = new ResponseState()
     }
 
-    RequestState request() {
-        return requestState
+    RequestState requestState() {
+        requestState
     }
 
-    ResponseState response() {
-        return responseState
+    ResponseState responseState() {
+        responseState
     }
 
     void sendRequest() throws Exception {

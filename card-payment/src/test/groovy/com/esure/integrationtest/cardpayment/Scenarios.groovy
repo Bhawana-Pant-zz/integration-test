@@ -13,17 +13,18 @@ class Scenarios {
 
     static ScenarioState setupScenarioState(Client client) {
         ScenarioState setupScenarioState = new ScenarioState(client)
-        return setupScenarioState.request()
+        setupScenarioState.requestState()
             .with(POST)
             .path("/setup")
             .addHeader("apikey", TestConfig.getConfig()["apikey"])
             .addHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString())
             .with(defaultSetupRequest().build())
+        setupScenarioState
     }
 
     static String executeSetupScenarioAndFetchUrl(Client client) {
         ScenarioState setupScenarioState = setupScenarioState(client)
         setupScenarioState.sendRequest()
-        return setupScenarioState.response().firstValueAtPath('')
+        return setupScenarioState.responseState().firstValueAtPath('')
     }
 }

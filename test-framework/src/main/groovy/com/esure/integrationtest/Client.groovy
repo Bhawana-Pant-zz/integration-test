@@ -9,8 +9,6 @@ import io.restassured.response.Response
 import static com.esure.integrationtest.request.HttpMethod.GET
 import static com.esure.integrationtest.request.HttpMethod.POST
 import static io.restassured.RestAssured.given
-import static org.apache.http.params.CoreConnectionPNames.CONNECTION_TIMEOUT
-import static org.apache.http.params.CoreConnectionPNames.SO_TIMEOUT
 
 trait Client {
 
@@ -25,7 +23,6 @@ trait Client {
                     return given()
                         .headers(requestState.getHeaders())
                         .when()
-                        .config(clientTimeoutConfig())
                         .get(requestState.getPath())
                         .thenReturn()
                 case POST:
@@ -44,11 +41,5 @@ trait Client {
         }
     }
 
-    private RestAssuredConfig clientTimeoutConfig() {
-        return RestAssured.config()
-            .httpClient(HttpClientConfig.httpClientConfig()
-            .setParam(CONNECTION_TIMEOUT, 1000)
-            .setParam(SO_TIMEOUT, 1000))
-    }
 
 }
