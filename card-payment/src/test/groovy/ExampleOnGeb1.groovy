@@ -2,7 +2,6 @@ import geb.Browser
 import spock.lang.Specification
 
 class ExampleOnGeb1 extends Specification{
-
     def setup(){
         System.setProperty('webdriver.chrome.driver', '/Users/ahaan/repos/integration-test/card-payment/src/test/resources/webdriver/chromedriver')
     }

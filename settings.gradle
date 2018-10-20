@@ -1,4 +1,5 @@
 rootProject.name = 'integration-test'
 include 'test-framework'
 include 'card-payment'
+include 'payment-plan'
 
