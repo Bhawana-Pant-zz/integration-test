@@ -8,12 +8,12 @@ class RequestState {
 
     RequestState with(HttpMethod httpMethod) {
         this.httpMethod = httpMethod
-        return this
+        this
     }
 
     RequestState path(String path) {
         this.path = path
-        return this
+        this
     }
 
     RequestState headers(Map<String, Object> headers) {
@@ -21,12 +21,12 @@ class RequestState {
         headers.entrySet().each { entry ->
             addHeader(entry.key, entry.value)
         }
-        return this
+        this
     }
 
     RequestState addHeader(String key, Object value) {
         this.headers.put(key, value)
-        return this
+        this
     }
 
     void with(Payload payload) {
@@ -34,18 +34,18 @@ class RequestState {
     }
 
     HttpMethod getHttpMethod() {
-        return httpMethod
+        httpMethod
     }
 
     String getPath() {
-        return path
+        path
     }
 
     Map<String, Object> getHeaders() {
-        return headers
+        headers
     }
 
     Payload getPayload() {
-        return payload
+        payload
     }
 }

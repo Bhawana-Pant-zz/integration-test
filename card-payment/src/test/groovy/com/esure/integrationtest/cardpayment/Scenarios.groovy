@@ -11,18 +11,20 @@ import static com.esure.integrationtest.request.HttpMethod.POST
 
 class Scenarios {
 
-    static ScenarioState setupScenarioState(Client client) {
+    static ScenarioState defaultSetupScenario(Client client) {
         ScenarioState setupScenarioState = new ScenarioState(client)
-        return setupScenarioState.request()
+        setupScenarioState.request()
             .with(POST)
             .path("/setup")
             .addHeader("apikey", TestConfig.getConfig()["apikey"])
             .addHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString())
             .with(defaultSetupRequest().build())
+
+        setupScenarioState
     }
 
     static String executeSetupScenarioAndFetchUrl(Client client) {
-        ScenarioState setupScenarioState = setupScenarioState(client)
+        ScenarioState setupScenarioState = defaultSetupScenario(client)
         setupScenarioState.sendRequest()
         return setupScenarioState.response().firstValueAtPath('')
     }

@@ -11,13 +11,12 @@ subprojects {
         mavenCentral()
     }
 
-    sourceCompatibility = 1.8
-
+   // sourceCompatibility = 1.8
     test {
         systemProperty "env", System.getProperty("env") // TODO work around
     }
 
-    dependencies {
+    dependencies    {
         compile libs['groovyall']
         compile libs['restassured']
         compile libs['spockcore']

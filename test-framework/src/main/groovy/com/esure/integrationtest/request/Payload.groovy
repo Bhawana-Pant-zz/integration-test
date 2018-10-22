@@ -4,10 +4,10 @@ import groovy.json.JsonOutput
 
 trait Payload {
     boolean hasPayload() {
-        return true
+         true
     }
 
     String asJsonString() {
-        return JsonOutput.toJson(this)
+         JsonOutput.toJson(this)
     }
 }

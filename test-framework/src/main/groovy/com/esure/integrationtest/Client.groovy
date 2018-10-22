@@ -25,7 +25,7 @@ trait Client {
                     return given()
                         .headers(requestState.getHeaders())
                         .when()
-                        .config(clientTimeoutConfig())
+                        //.config(clientTimeoutConfig())
                         .get(requestState.getPath())
                         .thenReturn()
                 case POST:
@@ -44,11 +44,11 @@ trait Client {
         }
     }
 
-    private RestAssuredConfig clientTimeoutConfig() {
-        return RestAssured.config()
-            .httpClient(HttpClientConfig.httpClientConfig()
-            .setParam(CONNECTION_TIMEOUT, 1000)
-            .setParam(SO_TIMEOUT, 1000))
-    }
+//    private RestAssuredConfig clientTimeoutConfig() {
+//        return RestAssured.config()
+//            .httpClient(HttpClientConfig.httpClientConfig()
+//            .setParam(CONNECTION_TIMEOUT, 1000)
+//            .setParam(SO_TIMEOUT, 1000))
+//    }
 
 }

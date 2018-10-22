@@ -7,31 +7,31 @@ import com.esure.integrationtest.cardpayment.payload.SetupRequestDefaults
 import spock.lang.Shared
 import spock.lang.Specification
 
-import static Scenarios.setupScenarioState
+import static Scenarios.defaultSetupScenario
 import static com.esure.integrationtest.cardpayment.payload.SetupRequestDefaults.requestWithProductCode
 import static org.apache.http.HttpStatus.SC_BAD_REQUEST
 import static org.apache.http.HttpStatus.SC_OK
 
 class SetUpSpec extends Specification {
-    ScenarioState setupScenarioState
+    ScenarioState scenarioUnderTest
     @Shared def client = new CardPaymentClient()
 
     def setup() {
-       setupScenarioState = setupScenarioState(client)
+       scenarioUnderTest = defaultSetupScenario(client)
     }
 
     def "Setup is success with different product code EM and FC"(String productCode) {
         given: 'a request with product code $productCode'
-        setupScenarioState.request().with(requestWithProductCode(productCode))
+        scenarioUnderTest.request().with(requestWithProductCode(productCode))
 
-        when: 'setupScenarioState request is sent'
+        when: 'scenarioUnderTest request is sent'
         ResponseState response = executeSetupAndGetResponse()
 
         then: 'it returns 200 response code'
         with(response) {
             response.printResponseBodyForDebugging()
             assert response.statusCode() == SC_OK
-            assert response.firstValueAtPath('infos.message') == 'Falcon card payment setupScenarioState method called successfully'
+            assert response.firstValueAtPath('infos.message') == 'Falcon card payment setup method called successfully'
             assert response.firstValueAtPath('results.reason') == 'ACCEPTED'
         }
 
@@ -43,9 +43,9 @@ class SetUpSpec extends Specification {
 
     def "Set up validation fails when request has missing fields"() {
         given: 'a request with no dynamic data field'
-        setupScenarioState.request().with(SetupRequestDefaults.requestWithNoDynamicData())
+        scenarioUnderTest.request().with(SetupRequestDefaults.requestWithNoDynamicData())
 
-        when: 'setupScenarioState request is sent'
+        when: 'scenarioUnderTest request is sent'
         ResponseState response = executeSetupAndGetResponse()
 
 
@@ -53,13 +53,13 @@ class SetUpSpec extends Specification {
         with(response) {
             assert response.statusCode() == SC_BAD_REQUEST
             assert response.firstValueAtPath('errors.code') == 'BAD_REQUEST'
-            assert response.firstValueAtPath('errors.message') == 'setupScenarioState.body.paymentSetupRequest.dynamicData must contain atleast 1 entry'
+            assert response.firstValueAtPath('errors.message') == 'setup.body.paymentSetupRequest.dynamicData must contain atleast 1 entry'
         }
     }
 
     private ResponseState executeSetupAndGetResponse() {
-        setupScenarioState.sendRequest()
-        def response = setupScenarioState.response()
+        scenarioUnderTest.sendRequest()
+        def response = scenarioUnderTest.response()
         response
     }
 }
