@@ -13,6 +13,7 @@ import static org.apache.http.HttpStatus.SC_BAD_REQUEST
 import static org.apache.http.HttpStatus.SC_OK
 
 class SetUpSpec extends Specification {
+
     ScenarioState scenarioUnderTest
     @Shared def client = new CardPaymentClient()
 
@@ -22,12 +23,13 @@ class SetUpSpec extends Specification {
 
     def "Setup is success with different product code EM and FC"(String productCode) {
         given: 'a request with product code $productCode'
-        scenarioUnderTest.request().with(requestWithProductCode(productCode))
+        scenarioUnderTest.requestState().with(requestWithProductCode(productCode))
 
         when: 'scenarioUnderTest request is sent'
+
         ResponseState response = executeSetupAndGetResponse()
 
-        then: 'it returns 200 response code'
+        then: 'it returns 200 responseState code'
         with(response) {
             response.printResponseBodyForDebugging()
             assert response.statusCode() == SC_OK
@@ -43,13 +45,14 @@ class SetUpSpec extends Specification {
 
     def "Set up validation fails when request has missing fields"() {
         given: 'a request with no dynamic data field'
-        scenarioUnderTest.request().with(SetupRequestDefaults.requestWithNoDynamicData())
+        scenarioUnderTest.requestState().with(SetupRequestDefaults.requestWithNoDynamicData())
 
         when: 'scenarioUnderTest request is sent'
+
         ResponseState response = executeSetupAndGetResponse()
 
 
-        then: 'it returns 400 response'
+        then: 'it returns 400 responseState'
         with(response) {
             assert response.statusCode() == SC_BAD_REQUEST
             assert response.firstValueAtPath('errors.code') == 'BAD_REQUEST'
@@ -58,8 +61,10 @@ class SetUpSpec extends Specification {
     }
 
     private ResponseState executeSetupAndGetResponse() {
+
         scenarioUnderTest.sendRequest()
-        def response = scenarioUnderTest.response()
+        def response = scenarioUnderTest.responseState()
+
         response
     }
 }

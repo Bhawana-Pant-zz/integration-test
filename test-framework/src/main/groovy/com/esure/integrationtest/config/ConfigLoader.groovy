@@ -14,7 +14,7 @@ class ConfigLoader {
     private void loadConfig() {
         def environment = isNullOrEmpty() ? 'dev' : System.getProperty('env')
         println "********************** Environment is set to $environment *************************"
-        this.config = new ConfigSlurper()
+                    this.config = new ConfigSlurper()
             .parse(getClass().getResource('/config.groovy'))
             .get('env')[environment] as ConfigObject
     }
