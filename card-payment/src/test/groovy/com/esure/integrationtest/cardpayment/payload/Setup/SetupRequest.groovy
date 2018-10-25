@@ -1,4 +1,4 @@
-package com.esure.integrationtest.cardpayment.payload
+package com.esure.integrationtest.cardpayment.payload.Setup
 
 import com.esure.integrationtest.request.Payload
 import groovy.json.JsonOutput

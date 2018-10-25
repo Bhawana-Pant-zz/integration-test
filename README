@@ -1,3 +1,6 @@
 This command use for running scenarios in test environment
 
 gradlew -i :card-payment:test -Denv=test
+
+To run tests in Test environment from Intellij
+set this in VM Option field of Edit Configuration -Denv=test

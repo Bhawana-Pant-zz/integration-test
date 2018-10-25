@@ -3,12 +3,12 @@ package com.esure.integrationtest.cardpayment
 import com.esure.integrationtest.ResponseState
 import com.esure.integrationtest.ScenarioState
 import com.esure.integrationtest.cardpayment.client.CardPaymentClient
-import com.esure.integrationtest.cardpayment.payload.SetupRequestDefaults
+import com.esure.integrationtest.cardpayment.payload.Setup.SetupRequestDefaults
 import spock.lang.Shared
 import spock.lang.Specification
 
 import static Scenarios.defaultSetupScenario
-import static com.esure.integrationtest.cardpayment.payload.SetupRequestDefaults.requestWithProductCode
+import static com.esure.integrationtest.cardpayment.payload.Setup.SetupRequestDefaults.requestWithProductCode
 import static org.apache.http.HttpStatus.SC_BAD_REQUEST
 import static org.apache.http.HttpStatus.SC_OK
 

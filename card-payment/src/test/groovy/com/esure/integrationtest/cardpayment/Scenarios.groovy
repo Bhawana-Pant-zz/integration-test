@@ -6,7 +6,7 @@ import com.esure.integrationtest.config.TestConfig
 import org.apache.http.HttpHeaders
 import org.apache.http.entity.ContentType
 
-import static com.esure.integrationtest.cardpayment.payload.SetupRequestDefaults.defaultSetupRequest
+import static com.esure.integrationtest.cardpayment.payload.Setup.SetupRequestDefaults.defaultSetupRequest
 import static com.esure.integrationtest.request.HttpMethod.POST
 
 class Scenarios {
