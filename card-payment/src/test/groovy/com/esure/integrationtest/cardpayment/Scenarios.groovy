@@ -13,20 +13,20 @@ class Scenarios {
 
     static ScenarioState defaultSetupScenario(Client client) {
         ScenarioState setupScenarioState = new ScenarioState(client)
-
         setupScenarioState.requestState()
-
             .with(POST)
             .path("/setup")
             .addHeader("apikey", TestConfig.getConfig()["apikey"])
             .addHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString())
             .with(defaultSetupRequest().build())
-            setupScenarioState
+        setupScenarioState
     }
 
     static String executeSetupScenarioAndFetchUrl(Client client) {
         ScenarioState setupScenarioState = defaultSetupScenario(client)
         setupScenarioState.sendRequest()
-        return setupScenarioState.responseState().firstValueAtPath('')
+        return setupScenarioState.responseState().firstValueAtPath('results.iframeURL')
     }
+
 }
+

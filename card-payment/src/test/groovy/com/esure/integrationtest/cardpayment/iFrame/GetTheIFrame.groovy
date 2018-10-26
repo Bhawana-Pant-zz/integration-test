@@ -4,7 +4,7 @@ class GetTheIFrame {
 
 
     static submitValueToIFrame(String iframeUrl) {
-        println(iframeUrl)
+        println("iFrameUrl:" + iframeUrl)
 
     }
 }
