@@ -31,7 +31,7 @@ class QueryRequestDefaults{
     static PaymentQueryRequestBuilder defaultPaymentQueryRequest(){
         return new PaymentQueryRequestBuilder().pspReference("")
     }
-    static QueryRequest defaultQueryRequest(){
+    static QueryRequestBuilder defaultQueryRequest(){
         return new QueryRequestBuilder()
             .channelSource(defaultsChannelSource().build())
             .paymentQueryRequest(defaultPaymentQueryRequest().build())

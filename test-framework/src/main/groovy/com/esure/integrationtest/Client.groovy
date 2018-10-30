@@ -2,8 +2,6 @@ package com.esure.integrationtest
 
 import com.esure.integrationtest.request.RequestState
 import io.restassured.RestAssured
-import io.restassured.config.HttpClientConfig
-import io.restassured.config.RestAssuredConfig
 import io.restassured.response.Response
 
 import static com.esure.integrationtest.request.HttpMethod.GET
